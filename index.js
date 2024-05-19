@@ -7,7 +7,20 @@ const questions = [
     {
       type: 'input',
       message: 'What letters will be in the logo (3 letters maximum)',
-      name: 'initial',
+      name: 'text',
+    },
+    {
+      type: 'list',
+      message: 'What Color will that text be',
+      name: 'textColor',
+      choices: [
+        "Red",
+        "Blue",
+        "Yellow",
+        "Orange",
+        "Purple",
+        "Green",
+        ],
     },
     {
         type: 'list',
@@ -24,8 +37,8 @@ const questions = [
     },
     {
       type: 'list',
-      message: 'What Color will your logo be',
-      name: 'license',
+      message: 'What Color will the shape of the logo be',
+      name: 'shapeColor',
       choices: [
         "Red",
         "Blue",
@@ -37,15 +50,17 @@ const questions = [
     },
 ];
 
-function generateLogo(filename, data) {
+/* function generateLogo(filename, data) {
     fs.writeFile(fileName, data, (err) =>
         err ? console.error(err) : console.log('Logo Generated'))
-};
+}; */
 
 function init() {
     inquirer.prompt(questions)
     .then((response) => {
-        generateLogo("logo.svg", svgGen(response));
+        //generateLogo("logo.svg", svgGen(response));
+        console.log(response);
+        svgGen(response);
         }
     );
 };
