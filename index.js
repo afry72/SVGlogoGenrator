@@ -59,7 +59,7 @@ function init() {
     inquirer.prompt(questions)
     .then((response) => {
         //generateLogo("logo.svg", svgGen(response));
-        console.log(response);
+        //console.log(response);
         svgGen(response);
         }
     );
