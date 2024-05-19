@@ -32,7 +32,6 @@ const questions = [
           "Triangle",
           "Rectangle",
           "Oval",
-          "Hexagon",
           ],
     },
     {
@@ -50,19 +49,28 @@ const questions = [
     },
 ];
 
-/* function generateLogo(filename, data) {
-    fs.writeFile(fileName, data, (err) =>
-        err ? console.error(err) : console.log('Logo Generated'))
-}; */
 
 function init() {
-    inquirer.prompt(questions)
-    .then((response) => {
-        //generateLogo("logo.svg", svgGen(response));
-        //console.log(response);
-        svgGen(response);
-        }
-    );
+  const {shape, text} = svgGen;
+    
+  const response = await inquirer.prompt(questions);
+
+  let svgFile = '';
+
+  if (response.shape) {
+    const shape = new shape(response.shape, response.shapeColor);
+    svgFile += shape.draw();
+  }
+  if (response.text) {
+    const text = new text(response.text, response.textColor);
+    svgFile += text.draw();
+  }
+
+  svgFile = '<svg width="300" height="200">${svgFile}<svg>';
+
+  fs.writeFileSync('logo.svg', svgWrite);
+  console.log('success');
 };
+
 
 init();
