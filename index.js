@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const svgGen = require('./lib/shapes');
+const {Shape, Text} = require('./lib/shapes');
  
 
 const questions = [
@@ -10,67 +10,56 @@ const questions = [
       name: 'text',
     },
     {
-      type: 'list',
+      type: 'input',
       message: 'What Color will that text be',
       name: 'textColor',
-      choices: [
-        "Red",
-        "Blue",
-        "Yellow",
-        "Orange",
-        "Purple",
-        "Green",
-        ],
-    },
-    {
-        type: 'list',
-        message: 'What shape will the logo be',
-        name: 'shape',
-        choices: [
-          "Circle",
-          "Square",
-          "Triangle",
-          "Rectangle",
-          "Oval",
-          ],
     },
     {
       type: 'list',
+      message: 'What shape will the logo be',
+      name: 'shape',
+      choices: [
+        "Circle",
+        "Square",
+        "Triangle",
+        "Rectangle",
+        "Oval",
+        ],
+    },
+    {
+      type: 'input',
       message: 'What Color will the shape of the logo be',
       name: 'shapeColor',
-      choices: [
-        "Red",
-        "Blue",
-        "Yellow",
-        "Orange",
-        "Purple",
-        "Green",
-        ],
     },
 ];
 
 
 function init() {
-  const {shape, text} = svgGen;
-    
-  const response = await inquirer.prompt(questions);
+    inquirer.prompt(questions)
+    .then((response) => {
+      console.log(response);
+        var text = new Text(response.text, response.textColor);
+        console.log(text);
+        switch (response.shape) {
+          case "Triangle":
+            var shape = new Shape(response.shape, response.shapeColor);
+            console.log(shape);
+            break;
+        };
 
-  let svgFile = '';
+        
+        var textString = text.draw();
+        var shapeString = shape.draw();
+        console.log(`<svg width="300" height="200">${shapeString}${textString}</svg>`);
 
-  if (response.shape) {
-    const shape = new shape(response.shape, response.shapeColor);
-    svgFile += shape.draw();
-  }
-  if (response.text) {
-    const text = new text(response.text, response.textColor);
-    svgFile += text.draw();
-  }
+        var svg = `<svg width="300" height="200">${shapeString}${textString}</svg>`;
 
-  svgFile = '<svg width="300" height="200">${svgFile}<svg>';
+        fs.writeFile("logo.svg", svg, (error) => {
+          if (error) throw error;
+        });
 
-  fs.writeFileSync('logo.svg', svgWrite);
-  console.log('success');
+        }
+    );
 };
-
 
 init();
