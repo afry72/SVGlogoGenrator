@@ -43,14 +43,33 @@ function init() {
         switch (response.shape) {
           case "Triangle":
             var shape = new Shape(response.shape, response.shapeColor);
-            console.log(shape);
+            //console.log(shape);
             break;
+
+          case "Square":
+            var shape = new Shape(response.shape, response.shapeColor);
+            //console.log(shape);
+            break;
+          
+          case "Circle":
+            var shape = new Shape(response.shape, response.shapeColor);
+            //console.log(shape);
+            break;
+          case "Oval":
+            var shape = new Shape(response.shape, response.shapeColor);
+            //console.log(shape);
+            break;
+          case "Rectangle":
+            var shape = new Shape(response.shape, response.shapeColor);
+            //console.log(shape);
+            break;
+          
         };
 
         
         var textString = text.draw();
         var shapeString = shape.draw();
-        console.log(`<svg width="300" height="200">${shapeString}${textString}</svg>`);
+        //console.log(`<svg width="300" height="200">${shapeString}${textString}</svg>`);
 
         var svg = `<svg width="300" height="200">${shapeString}${textString}</svg>`;
 
