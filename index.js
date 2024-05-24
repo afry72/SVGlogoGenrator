@@ -2,7 +2,7 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 const {Shape, Text} = require('./lib/shapes');
  
-
+//questions that will be asked once program is started 
 const questions = [
     {
       type: 'input',
@@ -33,13 +33,13 @@ const questions = [
     },
 ];
 
-
+//this function will start when the program starts, it will take the answers from inquierer and make an svg accordingly 
 function init() {
     inquirer.prompt(questions)
     .then((response) => {
-      console.log(response);
+      //console.log(response);
         var text = new Text(response.text, response.textColor);
-        console.log(text);
+        //console.log(text);
         switch (response.shape) {
           case "Triangle":
             var shape = new Shape(response.shape, response.shapeColor);
@@ -75,6 +75,7 @@ function init() {
 
         fs.writeFile("logo.svg", svg, (error) => {
           if (error) throw error;
+          console.log("SVG Created!!");
         });
 
         }
